@@ -1,0 +1,21 @@
+[project]
+name = "makengpgreatagain"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "fr0g",email = "brockblando4@gmail.com"}
+]
+license = {text = "GNU General Public License"}
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyautogui (>=0.9.54,<0.10.0)",
+    "namecomparator (>=1.0.20,<2.0.0)",
+    "pyperclip (>=1.11.0,<2.0.0)",
+    "pynput (>=1.8.1,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

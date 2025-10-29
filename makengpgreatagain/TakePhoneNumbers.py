@@ -13,7 +13,7 @@ nameLocation = pyautogui.Point(x=208, y=265)
 name = ""
 VBaddressLocation = pyautogui.Point(x=1362, y=560)
 is_address_available = False
-
+global zipCode
 ###
 
 
@@ -26,7 +26,7 @@ def start():
     pyautogui.tripleClick(nameLocation)
     pyautogui.hotkey('ctrl', 'c')
     name = paste()
-    print(name)
+    print(f"The name is: {name}")
     #variables
     firstname = name.split()[0]
     lastname = name.split()[-1]
@@ -40,28 +40,46 @@ def start():
 
     if pyautogui.locateCenterOnScreen('has_address.png'):
         if_address_true()
+        return "Address True"
     else:
         return "No address"
         
     ## user action required next
 
 def if_address_true():
-    is_address_available = True
+    global zipCode
     pyautogui.tripleClick(222,331)
     pyautogui.hotkey('ctrl', 'c')
     address = pyperclip.paste()
+    # go up to the comma and back one?? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     if 'County Road' in address:
-        address = address.split()[:4]
+        addressCleaned = address.split()[:4]
     else:
-        address = address.split()[:3]
-    address = " ".join(address)
+        addressCleaned = address.split()[:3]
+    addressCleaned = " ".join(addressCleaned)
     pyautogui.tripleClick(1362,560)
     #pyautogui.typewrite((address.replace('(Home)', "").lstrip()))
-    print(address)
-    pyautogui.typewrite(address)
+    print(f"The cleaned address is: {addressCleaned}")
+    pyautogui.typewrite(addressCleaned)
 
     pyautogui.click(2453,715) # search button
-    sleep(1)
+    sleep(0.5)
+    ## Find no results found? Remove inputs in address and put in the zip code
+    if pyautogui.locateCenterOnScreen('NoResultsFound.png'):
+        print('No Results Found! Inputting Zip Code')
+        pyautogui.tripleClick(1362, 560)
+        pyautogui.hotkey('del')
+        print(address)
+        for i in address.split(' '):
+            if i.isnumeric() and len(i) == 5:
+                zipCode = i
+                print(f"The zip code is: {zipCode}")
+                pyautogui.click(1868,567)
+                pyautogui.typewrite(zipCode)
+                sleep(0.9)
+                pyautogui.click(2449, 715)  # search button
+        else:
+            print('Could not find a zipcode')
     pyautogui.click(1383,804) #click first name on page
 
 def copy_number():

@@ -1,7 +1,9 @@
 from time import sleep
 import pyautogui
 import pyperclip
+from pyautogui import locateCenterOnScreen, tripleClick, hotkey
 from pynput import keyboard
+from NameComparator import NameComparator
 
 
 ## Location values
@@ -45,7 +47,6 @@ def make_primary():
         pyautogui.click(1267, 754)
     elif last_name1 != str.capitalize(last_name1):
         pyautogui.click(1597, 755)
-
     else:
         print("This is good")
 
@@ -64,12 +65,12 @@ def skip():
 
 ## KEYBIND STUFF
 def on_activate_j():
-    make_primary()
-    print(', pressed')
+    compare_name_and_zip()
+    print('j pressed')
 
 def on_activate_l():
     make_merge()
-    print('. pressed')
+    print('l pressed')
 
 def on_activate_k():
     skip()
@@ -79,5 +80,3 @@ with keyboard.GlobalHotKeys({
         'k': on_activate_k,
         'l': on_activate_l,}) as h:
     h.join()
-
-
